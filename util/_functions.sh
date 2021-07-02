@@ -14,6 +14,7 @@ build() {
 hub_manifest() {
     version=$1
 
+    echo "Creating manifest: ${IMAGE}:${version}"
     buildah manifest create "${IMAGE}:${version}"
 
     for arch in ${ARCHES[@]}; do
@@ -29,6 +30,8 @@ push_image() {
     target=$1
 
     for arch in ${ARCHES[@]}; do
+        echo "Source:      ${IMAGE}:${arch}-${version}"
+        echo "Destination: ${target}${IMAGE}:${arch}-${version}"
         buildah push -f v2s2 "${IMAGE}:${arch}-${version}" "${target}${IMAGE}:${arch}-${version}"
     done
 }
