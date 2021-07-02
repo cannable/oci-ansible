@@ -13,7 +13,7 @@ build() {
 
     echo Building $arch...
 
-    c=$(buildah from --arch "$arch" alpine)
+    c=$(buildah from --format docker --arch "$arch" alpine)
 
     buildah run $c -- apk add --no-cache \
         bash \
@@ -56,5 +56,5 @@ build() {
         --workingdir /home/ansible \
         $c
 
-    buildah commit --rm $c "$IMAGE:${arch}-latest"
+    buildah commit --format docker --rm $c "$IMAGE:${arch}-latest"
 }
