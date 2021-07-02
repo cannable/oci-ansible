@@ -12,6 +12,4 @@ fi
 version=$1
 registry=$2
 
-for arch in ${ARCHES[@]}; do
-    buildah push -f v2s2 "${IMAGE}:${arch}-${version}" "docker://${registry}/${IMAGE}:${arch}-${version}"
-done
+push_image "docker://${registry}/"

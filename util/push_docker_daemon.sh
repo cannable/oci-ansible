@@ -11,6 +11,4 @@ fi
 
 version=$1
 
-for arch in ${ARCHES[@]}; do
-    buildah push -f v2s2 "${IMAGE}:${arch}-${version}" "docker-daemon:${IMAGE}:${arch}-${version}"
-done
+push_image "docker-daemon:"

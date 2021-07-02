@@ -5,7 +5,7 @@
 
 IMAGE="cannable/ansible"
 #ARCHES=(amd64 arm64 arm)
-ARCHES=(amd64)
+ARCHES=(amd64 arm64)
 
 build() {
 
