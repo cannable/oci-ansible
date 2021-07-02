@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. ./_build_env.sh
+. "$(dirname $(dirname $(readlink -f $0)))/_build_env.sh"
 
 if [[ $# -ne 1 ]]; then
     echo Push image to Docker Hub

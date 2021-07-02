@@ -1,13 +1,6 @@
 #/bin/bash
 
-. ./_build_env.sh
-
-#if [[ $# -ne 1 ]]; then
-#    echo build.sh version
-#    exit 1
-#fi
-#
-#version=$1
+. "$(dirname $(dirname $(readlink -f $0)))/_build_env.sh"
 
 # Build phase
 
