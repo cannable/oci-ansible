@@ -49,5 +49,5 @@ build() {
         --workingdir /home/ansible \
         $c
 
-    buildah commit --rm $c $IMAGE
+    buildah commit --rm $c "$IMAGE:${arch}-latest"
 }
