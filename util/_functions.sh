@@ -11,17 +11,18 @@ build() {
     buildah bud --arch "$arch" --tag "${IMAGE}:${arch}-${version}" --build-arg "${VERSION_ARG}=${version}" -f ./Dockerfile .
 }
 
-hub_manifest() {
-    version=$1
+mkmanifest() {
+    target=$1
+    version=$2
 
     echo "Creating manifest: ${IMAGE}:${version}"
     buildah manifest create "${IMAGE}:${version}"
 
     for arch in ${ARCHES[@]}; do
-        buildah manifest add "${IMAGE}:${version}" "docker.io/${IMAGE}:${arch}-${version}"
+        buildah manifest add "${IMAGE}:${version}" "docker://${target}/${IMAGE}:${arch}-${version}"
     done
 
-    buildah manifest push -f v2s2 "${IMAGE}:${version}" "docker://${IMAGE}:${version}"
+    buildah manifest push -f v2s2 "${IMAGE}:${version}" "docker://${target}/${IMAGE}:${version}"
 
     buildah manifest rm "${IMAGE}:${version}"
 }

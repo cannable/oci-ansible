@@ -3,12 +3,13 @@
 . "$(dirname $(readlink -f $0))/_functions.sh"
 . "$(dirname $(dirname $(readlink -f $0)))/_build_env.sh"
 
-if [[ $# -ne 1 ]]; then
+if [[ $# -ne 2 ]]; then
     echo Create a manifest on the Docker Hub
-    echo manifest_hub.sh version
+    echo manifest_reg.sh version registry
     exit 1
 fi
 
 version=$1
+target=$2
 
-mkmanifest "docker.io" $version
+mkmanifest $version $target
