@@ -22,6 +22,7 @@ build() {
         py3-asn1 \
         py3-asn1crypto \
         py3-bcrypt \
+        py3-certifi \
         py3-cffi \
         py3-cparser \
         py3-cryptography \
@@ -37,6 +38,7 @@ build() {
         py3-ply \
         py3-pycryptodomex \
         py3-pynacl \
+        py3-requests \
         py3-six \
         py3-snmp \
         py3-wheel \
@@ -45,6 +47,7 @@ build() {
     buildah run $c python3 -m pip --no-cache-dir install ansible
     buildah run $c python3 -m pip --no-cache-dir install pyvmomi
     buildah run $c python3 -m pip --no-cache-dir install omsdk
+    buildah run $c python3 -m pip --no-cache-dir install hvac
 
 
     buildah run $c adduser -u 1000 -g 1000 -D ansible
