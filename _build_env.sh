@@ -14,11 +14,11 @@ ANSIBLE_HOME=/home/ansible
 
 build() {
 
-    arch=$1
+    local arch=$1
 
     echo Building $arch...
 
-    c=$(buildah from --format docker --arch "$arch" alpine)
+    local c=$(buildah from --format docker --arch "$arch" alpine)
 
     buildah run $c -- apk add --no-cache \
         bash \
