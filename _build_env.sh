@@ -5,7 +5,7 @@
 
 IMAGE="cannable/ansible"
 #ARCHES=(amd64 arm64 arm)
-ARCHES=(amd64 arm64)
+ARCHES=(amd64)
 
 build() {
 
@@ -17,6 +17,7 @@ build() {
 
     buildah run $c -- apk add --no-cache \
         bash \
+        dumb-init \
         python3 \
         openssh \
         py3-asn1 \
@@ -42,21 +43,27 @@ build() {
         py3-six \
         py3-snmp \
         py3-wheel \
-        py3-yaml
+        py3-yaml \
+        tcl
 
     buildah run $c python3 -m pip --no-cache-dir install ansible
     buildah run $c python3 -m pip --no-cache-dir install pyvmomi
     buildah run $c python3 -m pip --no-cache-dir install omsdk
     buildah run $c python3 -m pip --no-cache-dir install hvac
 
-
-    buildah run $c adduser -u 1000 -g 1000 -D ansible
+    buildah copy \
+        --chown root:root \
+        --chmod 0755 \
+        $c init.tcl /init.tcl
 
     buildah config  \
-        --user 1000:1000 \
-        --shell '/bin/bash -c' \
-        --volume /home/ansible \
-        --workingdir /home/ansible \
+        --env ANSIBLE_USER=ansible \
+        --env ANSIBLE_UID=1000 \
+        --env ANSIBLE_GID=1000 \
+        --entrypoint '["/usr/bin/dumb-init", "--", "/init.tcl"]' \
+        --cmd '["ansible"]' \
+        --volume /ansible \
+        --workingdir /ansible \
         $c
 
     buildah commit --format docker --rm $c "$IMAGE:${arch}-latest"
