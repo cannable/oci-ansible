@@ -15,8 +15,8 @@
 catch {
     exec -- {
         adduser
-        -h /ansible
         -s /bin/bash
+        -h $env(ANSIBLE_HOME)
         -u $env(ANSIBLE_UID)
         -g $env(ANSIBLE_GID)
         -D $env(ANSIBLE_USER)

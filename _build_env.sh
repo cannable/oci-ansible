@@ -5,7 +5,12 @@
 
 IMAGE="cannable/ansible"
 #ARCHES=(amd64 arm64 arm)
-ARCHES=(amd64)
+ARCHES=(amd64 arm64)
+
+ANSIBLE_USER=ansible
+ANSIBLE_UID=1000
+ANSIBLE_GID=1000
+ANSIBLE_HOME=/home/ansible
 
 build() {
 
@@ -57,13 +62,12 @@ build() {
         $c init.tcl /init.tcl
 
     buildah config  \
-        --env ANSIBLE_USER=ansible \
-        --env ANSIBLE_UID=1000 \
-        --env ANSIBLE_GID=1000 \
+        --env "ANSIBLE_USER=${ANSIBLE_USER}" \
+        --env "ANSIBLE_UID=${ANSIBLE_UID}" \
+        --env "ANSIBLE_GID=${ANSIBLE_GID}" \
+        --env "ANSIBLE_HOME=${ANSIBLE_HOME}" \
         --entrypoint '["/usr/bin/dumb-init", "--", "/init.tcl"]' \
         --cmd '["ansible"]' \
-        --volume /ansible \
-        --workingdir /ansible \
         $c
 
     buildah commit --format docker --rm $c "$IMAGE:${arch}-latest"
