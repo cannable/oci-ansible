@@ -7,10 +7,10 @@ IMAGE="cannable/ansible"
 #ARCHES=(amd64 arm64 arm)
 ARCHES=(amd64 arm64)
 
-ANSIBLE_USER=ansible
-ANSIBLE_UID=1000
-ANSIBLE_GID=1000
-ANSIBLE_HOME=/home/ansible
+CONTAINER_USER=ansible
+CONTAINER_UID=1000
+CONTAINER_GID=1000
+CONTAINER_HOME=/home/ansible
 
 build() {
 
@@ -62,10 +62,10 @@ build() {
         $c init.tcl /init.tcl
 
     buildah config  \
-        --env "ANSIBLE_USER=${ANSIBLE_USER}" \
-        --env "ANSIBLE_UID=${ANSIBLE_UID}" \
-        --env "ANSIBLE_GID=${ANSIBLE_GID}" \
-        --env "ANSIBLE_HOME=${ANSIBLE_HOME}" \
+        --env "CONTAINER_USER=${CONTAINER_USER}" \
+        --env "CONTAINER_UID=${CONTAINER_UID}" \
+        --env "CONTAINER_GID=${CONTAINER_GID}" \
+        --env "CONTAINER_HOME=${CONTAINER_HOME}" \
         --entrypoint '["/usr/bin/dumb-init", "--", "/init.tcl"]' \
         --cmd '["ansible"]' \
         $c

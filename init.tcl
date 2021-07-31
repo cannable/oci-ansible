@@ -16,10 +16,10 @@ catch {
     exec -- {
         adduser
         -s /bin/bash
-        -h $env(ANSIBLE_HOME)
-        -u $env(ANSIBLE_UID)
-        -g $env(ANSIBLE_GID)
-        -D $env(ANSIBLE_USER)
+        -h $env(CONTAINER_HOME)
+        -u $env(CONTAINER_UID)
+        -g $env(CONTAINER_GID)
+        -D $env(CONTAINER_USER)
     } <@stdin >@stdout 2>@stderr
 }
 
