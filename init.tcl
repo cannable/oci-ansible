@@ -12,22 +12,13 @@
 
 
 # Create unprivileged ansible user
-catch {
-    exec -- {
-        adduser
-        -s /bin/bash
-        -h $env(CONTAINER_HOME)
-        -u $env(CONTAINER_UID)
-        -g $env(CONTAINER_GID)
-        -D $env(CONTAINER_USER)
-    } <@stdin >@stdout 2>@stderr
-}
+exec -- /usr/sbin/adduser -s /bin/bash -h $env(CONTAINER_HOME) -u $env(CONTAINER_UID) -g $env(CONTAINER_GID) -D $env(CONTAINER_USER) <@stdin >@stdout 2>@stderr
 
 # Start the command line. If you want to add further wrapping, put it here
-set cmdline [list su $env(CONTAINER_USER) -c]
+set cmdline [list su $env(CONTAINER_USER) -c $argv]
 
 # Append what was passed as arguments to the command line
-lappend cmdline {*}$argv
+#lappend cmdline {*}$argv
 
 # Run the command line
 catch {exec -- {*}$cmdline <@stdin >@stdout 2>@stderr}
