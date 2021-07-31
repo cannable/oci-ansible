@@ -24,7 +24,7 @@ catch {
 }
 
 # Start the command line. If you want to add further wrapping, put it here
-set cmdline [list]
+set cmdline [list su $env(CONTAINER_USER) -c]
 
 # Append what was passed as arguments to the command line
 lappend cmdline {*}$argv
