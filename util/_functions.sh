@@ -12,8 +12,8 @@ build() {
 }
 
 mkmanifest() {
-    local target=$1
-    local ver=$2
+    local ver=$1
+    local target=$2
 
     echo "Creating manifest: ${IMAGE}:${ver}"
     buildah manifest create "${IMAGE}:${ver}"
@@ -28,8 +28,8 @@ mkmanifest() {
 }
 
 push_image() {
-    local target=$1
-    local ver=$2
+    local ver=$1
+    local target=$2
 
     for arch in ${ARCHES[@]}; do
         echo "Source:      ${IMAGE}:${arch}-${ver}"
